@@ -26,13 +26,15 @@ use yii\helpers\Url;
  * ]
  * ```
  *
+ * For more details and usage information on ActionColumn, see the [guide article on data widgets](guide:output-data-widgets).
+ *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
 class ActionColumn extends Column
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $headerOptions = ['class' => 'action-column'];
     /**
@@ -127,7 +129,7 @@ class ActionColumn extends Column
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -149,7 +151,7 @@ class ActionColumn extends Column
     }
 
     /**
-     * Initializes the default button rendering callback for single button
+     * Initializes the default button rendering callback for single button.
      * @param string $name Button name as it's written in template
      * @param string $iconName The part of Bootstrap glyphicon class that makes it unique
      * @param array $additionalOptions Array of additional options
@@ -159,7 +161,19 @@ class ActionColumn extends Column
     {
         if (!isset($this->buttons[$name]) && strpos($this->template, '{' . $name . '}') !== false) {
             $this->buttons[$name] = function ($url, $model, $key) use ($name, $iconName, $additionalOptions) {
-                $title = Yii::t('yii', ucfirst($name));
+                switch ($name) {
+                    case 'view':
+                        $title = Yii::t('yii', 'View');
+                        break;
+                    case 'update':
+                        $title = Yii::t('yii', 'Update');
+                        break;
+                    case 'delete':
+                        $title = Yii::t('yii', 'Delete');
+                        break;
+                    default:
+                        $title = ucfirst($name);
+                }
                 $options = array_merge([
                     'title' => $title,
                     'aria-label' => $title,
@@ -175,25 +189,25 @@ class ActionColumn extends Column
      * Creates a URL for the given action and model.
      * This method is called for each button and each row.
      * @param string $action the button name (or action ID)
-     * @param \yii\db\ActiveRecord $model the data model
+     * @param \yii\db\ActiveRecordInterface $model the data model
      * @param mixed $key the key associated with the data model
-     * @param integer $index the current row index
+     * @param int $index the current row index
      * @return string the created URL
      */
     public function createUrl($action, $model, $key, $index)
     {
         if (is_callable($this->urlCreator)) {
             return call_user_func($this->urlCreator, $action, $model, $key, $index, $this);
-        } else {
-            $params = is_array($key) ? $key : ['id' => (string) $key];
-            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-
-            return Url::toRoute($params);
         }
+
+        $params = is_array($key) ? $key : ['id' => (string) $key];
+        $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+
+        return Url::toRoute($params);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {
@@ -211,9 +225,9 @@ class ActionColumn extends Column
             if ($isVisible && isset($this->buttons[$name])) {
                 $url = $this->createUrl($name, $model, $key, $index);
                 return call_user_func($this->buttons[$name], $url, $model, $key);
-            } else {
-                return '';
             }
+
+            return '';
         }, $this->template);
     }
 }

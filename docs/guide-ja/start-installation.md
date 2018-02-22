@@ -50,12 +50,12 @@ Composer は `composer self-update` コマンドを実行してアップデー�
 > アクセス・トークンの構成の仕方については、[Github API トークンに関する Composer ドキュメント](https://getcomposer.org/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens)
 > の指示を参照して下さい。
 
-### Yii をインストールする
+### Yii をインストールする <span id="installing-from-composer"></span>
 
 Composer がインストールされたら、ウェブからアクセスできるフォルダで下記のコマンドを実行することによって Yii をインストールすることが出来ます。
 
 ```bash
-composer global require "fxp/composer-asset-plugin:~1.2.0"
+composer global require "fxp/composer-asset-plugin:~1.3.1"
 composer create-project --prefer-dist yiisoft/yii2-app-basic basic
 ```
 
@@ -150,7 +150,7 @@ http://localhost:8080/
   ```
 
 Yii の最低必要条件を満たすように PHP のインストールを構成しなければなりません。
-最も重要なことは、PHP 5.4 以上でなければならないということです。
+最も重要なことは、PHP 5.4 以上でなければならないということです。最新の PHP 7 なら理想的です。
 また、アプリケーションがデータベースを必要とする場合は、[PDO PHP 拡張](http://www.php.net/manual/ja/pdo.installation.php) および対応するデータベースドライバ (MySQL データベースのための `pdo_mysql` など) をインストールしなければなりません。
 
 
@@ -202,7 +202,7 @@ DocumentRoot "path/to/basic/web"
 
 [Nginx](http://wiki.nginx.org/) を使うためには、PHP を [FPM SAPI](http://jp1.php.net/install.fpm) としてインストールしなければなりません。
 下記の Nginx の設定を使うことができます。
-`path/to/basic/web` の部分を `basic/web` の実際のパスに置き換え、`mysite.local` を実際のサーバのホスト名に置き換えてください。
+`path/to/basic/web` の部分を `basic/web` の実際のパスに置き換え、`mysite.test` を実際のサーバのホスト名に置き換えてください。
 
 ```nginx
 server {
@@ -212,7 +212,7 @@ server {
     listen 80; ## listen for ipv4
     #listen [::]:80 default_server ipv6only=on; ## listen for ipv6
 
-    server_name mysite.local;
+    server_name mysite.test;
     root        /path/to/basic/web;
     index       index.php;
 

@@ -34,7 +34,7 @@ $totalCount = $provider->getTotalCount();
 
 データプロバイダのページネーションと並べ替えの振る舞いを指定するためには、その [[yii\data\BaseDataProvider::pagination|pagination]] と [[yii\data\BaseDataProvider::sort|sort]] のプロパティを構成します。
 二つのプロパティは、それぞれ、[[yii\data\Pagination]] と [[yii\data\Sort]] の構成情報に対応します。
-これらを false に設定して、ページネーションや並べ替えの機能を無効にすることも出来ます。
+これらを `false` に設定して、ページネーションや並べ替えの機能を無効にすることも出来ます。
 
 [データウィジェット](output-data-widgets.md)、例えば [[yii\grid\GridView]] は、`dataProvider` という名前のプロパティを持っており、これにデータプロバイダのインスタンスを受け取らせて、それが提供するデータを表示させることが出来ます。
 例えば、
@@ -250,7 +250,7 @@ class CsvDataProvider extends BaseDataProvider
     
  
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -261,7 +261,7 @@ class CsvDataProvider extends BaseDataProvider
     }
  
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function prepareModels()
     {
@@ -290,7 +290,7 @@ class CsvDataProvider extends BaseDataProvider
     }
  
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function prepareKeys($models)
     {
@@ -312,7 +312,7 @@ class CsvDataProvider extends BaseDataProvider
     }
  
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function prepareTotalCount()
     {
